@@ -12,7 +12,7 @@ public class OpenRouterExample {
                 .apiKey(AppConfig.require("openrouter.api-key"))
                 .build();
 
-        String model = AppConfig.get("openrouter.model", "openai/gpt-4o");
+        String model = AppConfig.get("openrouter.model", "deepseek/deepseek-r1:free");
 
         ChatCompletionCreateParams params = ChatCompletionCreateParams.builder()
                 .model(model)
