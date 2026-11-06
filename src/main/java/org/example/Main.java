@@ -1,17 +1,34 @@
 package org.example;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+import com.sun.net.httpserver.HttpServer;
+import org.telegram.telegrambots.longpolling.TelegramBotsLongPollingApplication;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+import java.net.InetSocketAddress;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        // Health-check сервер для Amvera (порт 8080)
+        startHealthServer();
+
+        // Токен из переменных окружения или application.properties
+        String token = AppConfig.require("telegram.bot-token");
+
+        // Создаём приложение и регистрируем бота
+        var app = new TelegramBotsLongPollingApplication();
+        app.registerBot(token, new MyBot());
+
+        System.out.println("Bot started (long polling)");
+    }
+
+    private static void startHealthServer() throws Exception {
+        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
+        server.createContext("/", exchange -> {
+            byte[] body = "OK".getBytes();
+            exchange.sendResponseHeaders(200, body.length);
+            exchange.getResponseBody().write(body);
+            exchange.close();
+        });
+        server.start();
+        System.out.println("Health-check сервер запущен на порту 8080");
     }
 }
