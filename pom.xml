@@ -21,6 +21,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots-client</artifactId>
+            <version>${telegrambots.version}</version>
+        </dependency>
         <!-- Telegram Bots: Long Polling -->
         <!-- Эта зависимость автоматически подтянет telegrambots-client и telegrambots-meta -->
         <dependency>

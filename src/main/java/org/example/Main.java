@@ -7,15 +7,13 @@ import java.net.InetSocketAddress;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        // Health-check сервер для Amvera (порт 8080)
         startHealthServer();
 
-        // Токен из переменных окружения или application.properties
         String token = AppConfig.require("telegram.bot-token");
+        String username = AppConfig.require("telegram.bot-username");  // ← новое
 
-        // Создаём приложение и регистрируем бота
         var app = new TelegramBotsLongPollingApplication();
-        app.registerBot(token, new MyBot());
+        app.registerBot(token, new MyBot(token, username));
 
         System.out.println("Bot started (long polling)");
     }
