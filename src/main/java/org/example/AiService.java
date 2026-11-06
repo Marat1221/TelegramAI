@@ -21,7 +21,7 @@ public class AiService {
 
     // По умолчанию — бесплатная модель. Можно переопределить через ENV / application.properties
     private static final String MODEL =
-            AppConfig.get("openrouter.model", "google/gemma-4-31b-it:free");
+            AppConfig.get("openrouter.model", "google/gemma-4-26b-a4b-it:free");
 
     private static final String SYSTEM_PROMPT =
             "Ты — Telegram-бот. Отвечай коротко и по делу, на языке пользователя.";
